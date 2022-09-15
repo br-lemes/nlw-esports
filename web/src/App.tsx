@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { MagnifyingGlassPlus } from 'phosphor-react';
 import logoImage from './assets/logo-nlw-esports.svg';
 import './styles/main.css';
@@ -45,7 +46,12 @@ const Banner = () => (
     </div>
 );
 
-const App = () => (
+interface ContentProps {
+    onClick: Function,
+    clicked: boolean,
+}
+
+const Content = (props: ContentProps) => (
     <div className='max-w-7xl mx-auto my-20 px-2 flex flex-col items-center'>
         <img src={logoImage} alt='eSports Logo' />
         <h1 className='text-6xl text-white font-black mt-20'>
@@ -57,6 +63,10 @@ const App = () => (
             {' '}
             está aqui
         </h1>
+        <div className='text-lg text-white text-center'>
+            <button onClick={() => props.onClick()}>Clique aqui</button>
+            {props.clicked ? <p>Usuário clicou</p> : null}
+        </div>
         <div className='grid grid-cols-6 gap-6 mt-16'>
             <Game image='/game-1.png' name='League of Legends' ads={4} />
             <Game image='/game-2.png' name='Dota 2' ads={4} />
@@ -71,4 +81,11 @@ const App = () => (
     </div>
 );
 
-export default App
+const App = () => {
+    const [clicked, setClicked] = useState(false);
+    const onClick = () => setClicked(!clicked);
+    console.log(clicked);
+    return <Content onClick={onClick} clicked={clicked} />
+}
+
+export default App;
