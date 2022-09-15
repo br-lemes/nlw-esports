@@ -5,8 +5,10 @@
         // cSpell: enable
     ],
     "words": [
+        "datasource",
         "esports",
         "Fortnite",
+        "sqlite",
         "tailwindcss"
     ]
 }
