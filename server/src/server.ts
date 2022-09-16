@@ -67,4 +67,4 @@ app.get('/ads/:id/discord', async (request, response) => {
     return response.json(ad);
 });
 
-app.listen(3333);
+app.listen(8080);
