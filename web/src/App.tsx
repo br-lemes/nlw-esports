@@ -4,17 +4,10 @@ import logoImage from './assets/logo-nlw-esports.svg';
 import './styles/main.css';
 import GameBanner from './components/GameBanner';
 import CreateAdBanner from './components/CreateAdBanner';
-import CreateAdModal from './components/CreateAdModal';
+import CreateAdModal, { Game } from './components/CreateAdModal';
 
 interface ContentProps {
     games: Game[],
-}
-
-interface Game {
-    id: string;
-    title: string;
-    bannerUrl: string;
-    _count: { ads: number; }
 }
 
 const Content = (props: ContentProps) => (
@@ -42,7 +35,7 @@ const Content = (props: ContentProps) => (
         <div className='mt-8 pt-1 bg-nlw-gradient self-stretch rounded-lg'>
             <Dialog.Root>
                 <CreateAdBanner />
-                <CreateAdModal />
+                <CreateAdModal games={props.games} />
             </Dialog.Root>
         </div>
     </div>

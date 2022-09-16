@@ -1,22 +1,62 @@
-import { GameController } from 'phosphor-react';
+import { Check, GameController } from 'phosphor-react';
+import * as Checkbox from '@radix-ui/react-checkbox'
 import * as Dialog from '@radix-ui/react-dialog';
-import { Input, Label } from './form';
+import * as ToggleGroup from '@radix-ui/react-toggle-group';
+import { Input, Label, Select } from './form';
+import { useState } from 'react';
 
-interface DayButtonProps {
-    title: string;
-    children: React.ReactNode;
+interface Week { value: string; label: string; title: string; }
+
+const week: Week[] = [
+    { value: '0', label: 'D', title: 'Domingo' },
+    { value: '1', label: 'S', title: 'Segunda' },
+    { value: '2', label: 'T', title: 'Terça' },
+    { value: '3', label: 'Q', title: 'Quarta' },
+    { value: '4', label: 'Q', title: 'Quinta' },
+    { value: '5', label: 'S', title: 'Sexta' },
+];
+
+const WeekButtons = () => {
+    const [weekDays, setWeekDays] = useState<string[]>([]);
+    return (
+        <ToggleGroup.Root
+            type='multiple'
+            className='grid grid-cols-4 gap-2'
+            value={weekDays}
+            onValueChange={setWeekDays}
+        >
+            {week.map((day) =>
+                <ToggleGroup.Item
+                    key={day.value}
+                    value={day.value}
+                    title={day.title}
+                    className={`
+                        w-8 h-8 rounded
+                        ${weekDays.includes(day.value)
+                            ? ' bg-violet-500'
+                            : ' bg-zinc-900'
+                        }
+                    `}
+                >
+                    {day.label}
+                </ToggleGroup.Item>
+            )}
+        </ToggleGroup.Root>
+    );
 }
 
-const DayButton = (props: DayButtonProps) => (
-    <button
-        title={props.title}
-        className='w-8 h-8 rounded bg-zinc-900'
-    >
-        {props.children}
-    </button>
-);
+export interface Game {
+    id: string;
+    title: string;
+    bannerUrl: string;
+    _count: { ads: number; }
+}
 
-const CreateAdModal = () => (
+interface CreateAdModalProps {
+    games: Game[];
+}
+
+const CreateAdModal = ({ games }: CreateAdModalProps) => (
     <Dialog.Portal>
         <Dialog.Overlay className='bg-black/60 inset-0 fixed' />
         <Dialog.Content
@@ -33,11 +73,16 @@ const CreateAdModal = () => (
                     <Label htmlFor='game'>
                         Qual o game?
                     </Label>
-                    <Input
-                        id='game'
-                        type='text'
-                        placeholder='Selecione o game que deseja jogar'
-                    />
+                    <Select id='game'>
+                        <option disabled value=''>
+                            Selecione o game que deseja jogar
+                        </option>
+                        {games.map((game) =>
+                            <option key={game.id} value={game.id}>
+                                {game.title}
+                            </option>
+                        )}
+                    </Select>
                 </div>
                 <div className='flex flex-col gap-2'>
                     <Label htmlFor='name'>
@@ -76,27 +121,19 @@ const CreateAdModal = () => (
                         <Label htmlFor='weekDays'>
                             Quando costuma jogar?
                         </Label>
-                        <div className='grid grid-cols-4 gap-2'>
-                            <DayButton title='Domingo'>D</DayButton>
-                            <DayButton title='Segunda'>S</DayButton>
-                            <DayButton title='Terça'>T</DayButton>
-                            <DayButton title='Quarta'>Q</DayButton>
-                            <DayButton title='Quinta'>Q</DayButton>
-                            <DayButton title='Sexta'>S</DayButton>
-                            <DayButton title='Sábado'>S</DayButton>
-                        </div>
+                        <WeekButtons />
                     </div>
                     <div className='flex flex-col gap-2 flex-1'>
                         <Label htmlFor='hourStart'>
                             Qual horário do dia?
                         </Label>
                         <div className='grid grid-cols-2 gap-2'>
-                            <input
+                            <Input
                                 id='hourStart'
                                 type='time'
                                 placeholder='De'
                             />
-                            <input
+                            <Input
                                 id='hourEnd'
                                 type='time'
                                 placeholder='Até'
@@ -104,10 +141,16 @@ const CreateAdModal = () => (
                         </div>
                     </div>
                 </div>
-                <div className='mt-2 flex gap-2 text-sm'>
-                    <input type='checkbox' />
+                <label className='mt-2 flex items-center gap-2 text-sm'>
+                    <Checkbox.Root
+                        className='w-6 h-6 p-1 rounded bg-zinc-900'
+                    >
+                        <Checkbox.Indicator>
+                            <Check size={16} className='text-emerald-500' />
+                        </Checkbox.Indicator>
+                    </Checkbox.Root>
                     Costumo me conectar ao chat de voz
-                </div>
+                </label>
                 <footer className='mt-4 flex justify-end gap-4'>
                     <Dialog.Close
                         className='
