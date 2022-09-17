@@ -4,11 +4,7 @@ import {
     SelectHTMLAttributes,
 } from 'react';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> { }
-interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> { }
-interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> { }
-
-export const Input = (props: InputProps) => (
+export const Input = (props: InputHTMLAttributes<HTMLInputElement>) => (
     <input
         {...props}
         className='
@@ -17,13 +13,19 @@ export const Input = (props: InputProps) => (
     />
 );
 
-export const Label = ({ children, ...rest }: LabelProps) => (
+export const Label = ({
+    children,
+    ...rest
+}: LabelHTMLAttributes<HTMLLabelElement>) => (
     <label {...rest} className='font-semibold mt-4'>
         {children}
     </label>
-)
+);
 
-export const Select = ({ children, ...rest }: SelectProps) => (
+export const Select = ({
+    children,
+    ...rest
+}: SelectHTMLAttributes<HTMLSelectElement>) => (
     <select
         {...rest}
         className='

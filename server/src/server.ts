@@ -34,7 +34,7 @@ app.post('/games/:id/ads', async (request, response) => {
             hourEnd: body.hourEnd,
             useVoiceChannel: body.useVoiceChannel,
         }
-    })
+    });
     return response.status(201).json(ad);
 });
 

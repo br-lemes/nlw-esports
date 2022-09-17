@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, Image, FlatList } from 'react-native';
 import logoImg from '../assets/logo-nlw-esports.png';
-import { GAMES } from '../utils/games';
 import { Heading } from '../components/Heading';
 import { GameCard, GameCardProps } from '../components/GameCard';
 
@@ -26,8 +25,8 @@ export const Home = () => {
     const [games, setGames] = useState<GameCardProps[]>([]);
     useEffect(() => {
         fetch('http://192.168.1.104:8080/games')
-        .then((response) => response.json())
-        .then((data) => setGames(data));
+            .then((response) => response.json())
+            .then((data) => setGames(data));
     }, []);
     return (
         <View style={styles.container}>
@@ -49,4 +48,4 @@ export const Home = () => {
             />
         </View>
     );
-}
+};

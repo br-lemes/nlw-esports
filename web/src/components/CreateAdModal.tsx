@@ -1,9 +1,9 @@
+import { useState } from 'react';
 import { Check, GameController } from 'phosphor-react';
-import * as Checkbox from '@radix-ui/react-checkbox'
+import * as Checkbox from '@radix-ui/react-checkbox';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
 import { Input, Label, Select } from './form';
-import { useState } from 'react';
 
 interface Week { value: string; label: string; title: string; }
 
@@ -25,25 +25,24 @@ const WeekButtons = () => {
             value={weekDays}
             onValueChange={setWeekDays}
         >
-            {week.map((day) =>
-                <ToggleGroup.Item
-                    key={day.value}
-                    value={day.value}
-                    title={day.title}
-                    className={`
-                        w-8 h-8 rounded
-                        ${weekDays.includes(day.value)
-                            ? ' bg-violet-500'
-                            : ' bg-zinc-900'
-                        }
-                    `}
-                >
-                    {day.label}
-                </ToggleGroup.Item>
-            )}
+            {week.map((day) => {
+                const bgClass = weekDays.includes(day.value)
+                    ? ' bg-violet-500'
+                    : ' bg-zinc-900';
+                return (
+                    <ToggleGroup.Item
+                        key={day.value}
+                        value={day.value}
+                        title={day.title}
+                        className={`w-8 h-8 rounded ${bgClass}`}
+                    >
+                        {day.label}
+                    </ToggleGroup.Item>
+                );
+            })}
         </ToggleGroup.Root>
     );
-}
+};
 
 export interface Game {
     id: string;

@@ -46,9 +46,9 @@ const App = () => {
     useEffect(() => {
         fetch('http://localhost:8080/games')
             .then(response => response.json())
-            .then(data => setGames(data))
+            .then(data => setGames(data));
     }, []);
-    return <Content games={games} />
-}
+    return <Content games={games} />;
+};
 
 export default App;
