@@ -13,6 +13,7 @@ import { Entypo } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Background } from '../components/Background';
 import { DuoCard, DuoCardProps } from '../components/DuoCard';
+import { DuoMatch } from '../components/DuoMatch';
 import { Heading } from '../components/Heading';
 import { THEME } from '../theme';
 import logoImg from '../assets/logo-nlw-esports.png';
@@ -78,6 +79,7 @@ export interface GameParams {
 
 export const Game = () => {
     const [duos, setDuos] = useState<DuoCardProps[]>([]);
+    const [duoSelected, setDuoSelected] = useState('');
     const navigation = useNavigation();
     const route = useRoute();
     const game = route.params as GameParams;
@@ -86,11 +88,18 @@ export const Game = () => {
         navigation.goBack();
     }
 
+    async function getDiscordUser(adId: string) {
+        fetch(`http://192.168.1.104:8080/ads/${adId}/discord`)
+            .then((response) => response.json())
+            .then((data) => setDuoSelected(data.discord));
+    }
+
     useEffect(() => {
         fetch(`http://192.168.1.104:8080/games/${game.id}/ads`)
             .then((response) => response.json())
             .then((data) => setDuos(data));
     }, []);
+
     return (
         <Background>
             <SafeAreaView style={styles.container}>
@@ -124,7 +133,7 @@ export const Game = () => {
                         renderItem={({ item }) =>
                             <DuoCard
                                 data={item}
-                                onConnect={() => { return; }}
+                                onConnect={() => getDiscordUser(item.id)}
                             />
                         }
                         horizontal
@@ -141,6 +150,11 @@ export const Game = () => {
                         }
                     />
                 </ScrollView>
+                <DuoMatch
+                    visible={duoSelected.length > 0}
+                    onClose={() => setDuoSelected('')}
+                    discord={duoSelected}
+                />
             </SafeAreaView>
         </Background>
     );
