@@ -1,6 +1,6 @@
-import { StyleSheet, ImageBackground } from 'react-native';
-import backgroundImg from '../assets/background-galaxy.png';
+import { ImageBackground, StyleSheet } from 'react-native';
 import { THEME } from '../theme';
+import backgroundImg from '../assets/background-galaxy.png';
 
 const styles = StyleSheet.create({
     container: {

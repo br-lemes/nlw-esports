@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, ViewProps } from 'react-native';
+import { StyleSheet, Text, View, ViewProps } from 'react-native';
 import { THEME } from '../theme';
 
 const styles = StyleSheet.create({

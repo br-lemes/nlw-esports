@@ -58,7 +58,6 @@ export const GameCard = ({ data, ...rest }: Props) => (
                 <Text style={styles.name}>{data.title}</Text>
                 <Text style={styles.ads}>{data._count.ads} anúncios</Text>
             </LinearGradient>
-            <Text style={styles.name}>***** CARD *****</Text>
         </ImageBackground>
     </TouchableOpacity>
 );
