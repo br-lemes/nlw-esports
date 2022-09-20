@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import logoImage from './assets/logo-nlw-esports.svg';
 import './styles/main.css';
 import GameBanner from './components/GameBanner';
 import CreateAdBanner from './components/CreateAdBanner';
@@ -12,7 +11,7 @@ interface ContentProps {
 
 const Content = (props: ContentProps) => (
     <div className='max-w-7xl mx-auto my-20 px-2 flex flex-col items-center'>
-        <img src={logoImage} alt='eSports Logo' />
+        <img src='/logo-nlw-esports.svg' alt='eSports Logo' />
         <h1 className='text-6xl text-white font-black mt-20'>
             Seu
             {' '}
