@@ -21,7 +21,9 @@ const Content = (props: ContentProps) => (
             {' '}
             está aqui
         </h1>
-        <div className='grid grid-cols-6 gap-6 mt-16'>
+        <div className='
+            grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mt-16
+        '>
             {props.games.map((game) =>
                 <GameBanner
                     key={game.id}
